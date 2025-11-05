@@ -22,14 +22,20 @@ export default function Hero() {
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Slides */}
-      <div className="absolute inset-0" ref={emblaRef}>
+      {/*
+        Embla expects a viewport element with overflow hidden. Adding
+        `overflow-hidden` to the viewport and ensuring each slide is
+        `min-w-full flex-shrink-0` prevents slides from being placed
+        outside the visible area which can make them appear missing.
+      */}
+      <div className="absolute inset-0 overflow-hidden" ref={emblaRef}>
         <div className="flex h-full">
           {SLIDES.map((src, i) => (
-            <div key={i} className="relative h-full flex-[0_0_100%]">
+            <div key={i} className="relative h-full flex-shrink-0 min-w-full">
               <img
                 src={src}
-                alt="Hero slide"
-                className="h-full w-full object-cover"
+                alt={`Hero slide ${i + 1}`}
+                className="block h-full w-full object-cover"
                 loading={i === 0 ? "eager" : "lazy"}
               />
             </div>

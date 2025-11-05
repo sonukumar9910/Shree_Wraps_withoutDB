@@ -1,6 +1,25 @@
 import { Mail, Phone, MapPin } from "lucide-react";
+import { useState } from "react";
 
 export default function ContactUs() {
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setForm((s) => ({ ...s, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const message = `*Contact Request*\n\nName: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`;
+
+    const whatsappLink = `https://wa.me/917292871937?text=${encodeURIComponent(message)}`;
+    window.open(whatsappLink, "_blank");
+  };
+
+  const isValid = form.name.trim() && form.email.trim() && form.message.trim();
+
   return (
     <main className="w-full bg-gray-50 text-gray-800">
       {/* Hero Section */}
@@ -70,11 +89,14 @@ export default function ContactUs() {
         {/* Right Side: Contact Form */}
         <div className="bg-white rounded-xl shadow-md p-6">
           <h2 className="text-2xl font-semibold mb-6">Send us a message</h2>
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium">Name</label>
               <input
                 type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
                 placeholder="Your Name"
                 className="mt-1 w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
               />
@@ -83,6 +105,9 @@ export default function ContactUs() {
               <label className="block text-sm font-medium">Email</label>
               <input
                 type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
                 placeholder="you@example.com"
                 className="mt-1 w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
               />
@@ -90,6 +115,9 @@ export default function ContactUs() {
             <div>
               <label className="block text-sm font-medium">Message</label>
               <textarea
+                name="message"
+                value={form.message}
+                onChange={handleChange}
                 placeholder="Write your message..."
                 rows={5}
                 className="mt-1 w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
@@ -97,7 +125,8 @@ export default function ContactUs() {
             </div>
             <button
               type="submit"
-              className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary/90 transition"
+              disabled={!isValid}
+              className={`w-full py-2 rounded-md transition ${isValid ? 'bg-primary text-white hover:bg-primary/90' : 'bg-gray-300 text-gray-600 cursor-not-allowed'}`}
             >
               Send Message
             </button>
