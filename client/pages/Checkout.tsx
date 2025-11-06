@@ -102,8 +102,21 @@ export default function Checkout() {
             Order via WhatsApp
           </a>
 
+          {/* Email order button: opens mail client with item list, qty and amounts */}
+          <a
+            href={(() => {
+              const lines = state.items.map((i) => `${i.name} - Qty: ${i.qty} - Amount: ₹${(i.price * i.qty).toLocaleString("en-IN")}`);
+              const body = `Hey i just wanted to order something:\n\n${lines.join("\n\n")}\n\nTotal: ₹${total.toLocaleString("en-IN")}`;
+              const subject = "Hey i just wanted to order something";
+              return `mailto:Shree.wraps@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            })()}
+            className="mt-3 w-full h-11 rounded-md bg-blue-600 text-white text-sm font-medium flex items-center justify-center gap-2 hover:bg-blue-700 transition"
+          >
+            Place order via Email
+          </a>
+
           <p className="mt-4 text-xs md:text-sm text-muted-foreground text-center">
-            Click the button above to confirm your order on WhatsApp
+            Use WhatsApp for instant confirmation or Email us and we'll follow up.
           </p>
 
           <Link 

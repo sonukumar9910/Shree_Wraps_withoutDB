@@ -1,6 +1,7 @@
 /** @import must precede all other statements */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -112,4 +113,56 @@
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+@layer components {
+  /* Great Vibes utility for large cursive headings used in testimonials/reviews */
+  .font-great {
+    font-family: 'Great Vibes', cursive;
+    /* keep weight/light rendering for elegant look */
+    font-weight: 400;
+  }
+
+  /* Generic testimonial card enhancements. These selectors intentionally target
+     the dashed pink testimonial cards used in `Testimonials.tsx` which already
+     use `rounded-lg border border-dashed border-pink-300 p-6 bg-white`.
+     We add only visual polish (shadow, softer background) without changing
+     markup or textual content. */
+  .rounded-lg.border-dashed.border-pink-300.p-6 {
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.06);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+  .rounded-lg.border-dashed.border-pink-300.p-6:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(16, 24, 40, 0.08);
+  }
+
+  /* Styling for the small pink labels/heading text inside testimonial cards */
+  .rounded-lg.border-dashed.border-pink-300.p-6 .text-pink-600 {
+    color: #e11d48; /* slightly stronger pink for better contrast */
+  }
+
+  /* Add a subtle confetti-style background to sections that contain
+     a Great Vibes heading (modern browsers). This won't alter markup and
+     is scoped to testimonial/review sections that use the `.font-great` class. */
+  section:has(h2.font-great) {
+    background-image: radial-gradient(rgba(230, 57, 134, 0.03) 1px, transparent 1px),
+                      radial-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                      radial-gradient(rgba(34, 197, 94, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px, 18px 18px, 30px 30px;
+    background-position: 0 0, 8px 8px, 16px 16px;
+  }
+
+  /* Make the large Great Vibes heading scale nicely on smaller screens */
+  h2.font-great {
+    letter-spacing: -0.5px;
+    color: #111827; /* keep it readable on light/dark */
+  }
+  @media (min-width: 768px) {
+    h2.font-great { font-size: 3.5rem; line-height: 0.95; }
+  }
+  @media (min-width: 1024px) {
+    h2.font-great { font-size: 5.5rem; line-height: 0.9; }
+  }
 }

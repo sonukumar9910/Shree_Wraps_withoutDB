@@ -12,6 +12,9 @@ import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import PromotionalGifts from "./pages/PromotionalGifts";
+import CorporateGifts from "./pages/CorporateGifts";
+import OccasionalGifts from "./pages/OccasionalGifts";
 import Blog from "./pages/Blog";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
@@ -22,6 +25,7 @@ import Terms from "./pages/Terms";
 import NavBar from "./components/site/NavBar";
 import Footer from "./components/site/Footer";
 import Privacy from "./pages/Privacy";
+import ScrollToTop from "./components/site/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +53,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Index />} />
@@ -60,6 +65,9 @@ const App = () => (
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/bulk-order" element={<BulkOrder />} />
+            <Route path="/promotional-gifts" element={<PromotionalGifts />} />
+            <Route path="/corporate-gifts" element={<CorporateGifts />} />
+            <Route path="/occasional-gifts" element={<OccasionalGifts />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
